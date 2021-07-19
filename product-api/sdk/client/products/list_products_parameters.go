@@ -58,6 +58,14 @@ func NewListProductsParamsWithHTTPClient(client *http.Client) *ListProductsParam
    Typically these are written to a http.Request.
 */
 type ListProductsParams struct {
+
+	/* Currency.
+
+	     Currency used when returning the price of the product.
+	When not specified, currency is returned in EUR.
+	*/
+	Currency *string
+
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
@@ -111,6 +119,17 @@ func (o *ListProductsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithCurrency adds the currency to the list products params
+func (o *ListProductsParams) WithCurrency(currency *string) *ListProductsParams {
+	o.SetCurrency(currency)
+	return o
+}
+
+// SetCurrency adds the currency to the list products params
+func (o *ListProductsParams) SetCurrency(currency *string) {
+	o.Currency = currency
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *ListProductsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -118,6 +137,23 @@ func (o *ListProductsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		return err
 	}
 	var res []error
+
+	if o.Currency != nil {
+
+		// query param Currency
+		var qrCurrency string
+
+		if o.Currency != nil {
+			qrCurrency = *o.Currency
+		}
+		qCurrency := qrCurrency
+		if qCurrency != "" {
+
+			if err := r.SetQueryParam("Currency", qCurrency); err != nil {
+				return err
+			}
+		}
+	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)

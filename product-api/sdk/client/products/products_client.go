@@ -139,8 +139,6 @@ func (a *Client) ListProducts(params *ListProductsParams, opts ...ClientOption) 
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
-
-
 	for _, opt := range opts {
 		opt(op)
 	}
@@ -220,8 +218,6 @@ func (a *Client) UpdateProduct(params *UpdateProductParams, opts ...ClientOption
 	for _, opt := range opts {
 		opt(op)
 	}
-
-	
 
 	result, err := a.transport.Submit(op)
 	if err != nil {
